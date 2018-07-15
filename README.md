@@ -1,0 +1,1 @@
+This is simple Conway's game of life implementation in python 3.6
