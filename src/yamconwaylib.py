@@ -19,8 +19,8 @@ class YamConway:
             self.births = self.births + 1
 
     def run_simulation(self, turns, delay):
+        self.initialize_seed(1)
         for turn in range(turns):
-            self.initialize_seed(1)
             self.update_board(self.board1, self.board2)
             self.board1, self.board2 = self.board2, self.board1
             self.print_board_pretty(self.board1)
@@ -57,6 +57,15 @@ class YamConway:
                 else:
                     row_repr = row_repr + "."
             print(row_repr)
+
+    def get_network_board(self):
+        result = ""
+        for row in self.board1:
+            for cell in row:
+                result = result+str(cell)+','
+            result = result + ';'
+        return result
+
 
     @staticmethod
     def board_to_pretty_string(board):
@@ -152,3 +161,8 @@ class YamConway:
         for row in range(length):
             for cell in range(width):
                 target_board[row][cell] = self.cell_state(source_board, row, cell)
+
+    def next_turn(self):
+        self.update_board(self.board1, self.board2)
+        self.board1, self.board2 = self.board2, self.board1
+
