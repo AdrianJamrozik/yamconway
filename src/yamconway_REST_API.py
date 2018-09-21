@@ -13,6 +13,11 @@ class BoardState(Resource):
         return yc.board1
 
 
+class GetNetworkBoard(Resource):
+    def get(self):
+        return yc.get_network_board()
+
+
 class NextTurn(Resource):
     def get(self):
         yc.next_turn()
@@ -26,6 +31,7 @@ class Reset(Resource):
         return yc.board1
 
 
+api.add_resource(GetNetworkBoard, '/networkboardstate')  # Route_1
 api.add_resource(BoardState, '/boardstate')  # Route_1
 api.add_resource(NextTurn, '/nextturn')  # Route_1
 api.add_resource(Reset, '/reset')

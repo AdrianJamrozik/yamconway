@@ -62,10 +62,8 @@ class YamConway:
         result = ""
         for row in self.board1:
             for cell in row:
-                result = result+str(cell)+','
-            result = result + ';'
+                result = result + str(cell)
         return result
-
 
     @staticmethod
     def board_to_pretty_string(board):
@@ -165,4 +163,3 @@ class YamConway:
     def next_turn(self):
         self.update_board(self.board1, self.board2)
         self.board1, self.board2 = self.board2, self.board1
-
