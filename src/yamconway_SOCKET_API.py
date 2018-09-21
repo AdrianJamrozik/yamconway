@@ -6,7 +6,8 @@ from time import sleep
 
 HOST = 'localhost'  # Symbolic name meaning all available interfaces
 PORT = 5002  # Arbitrary non-privileged port
-yc = YamConway()
+
+yc = None
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 print('Socket created')
@@ -50,13 +51,23 @@ while loops > 0:
 if addr:
     print('Connected with ' + addr[0] + ':' + str(addr[1]))
 
+""" Main loop."""
 while conn:
-    data = conn.recv(1024)
+    print("main loop")
+    data = conn.recv(262144).decode('utf-8')
     print(data)
-    if data == b'NextTurn':
-        print("NextTurn")
+    if data.startswith('Init'):  # example format 'Init99x100'
+        try:
+            r = int(data[4:data.find('x')])
+            c = int(data[data.find('x')+1:])
+            # print("Creating board {} x {}".Format(r, c))
+            yc = YamConway(rows=r, columns=c)  # This is our simulation
+        except:
+            conn.close()
+            s.close()
+    if data == 'NextTurn':
         yc.next_turn()
-        print(yc.get_network_board())
+        # print(yc.get_network_board())
         conn.send(yc.get_network_board().encode())
     if not data:
         print("no data")
